@@ -53,12 +53,15 @@ export default class UrlController {
         try {
             const id = req.params.id as string
             
-            const redirectionUrl = await this.getRedirectById.execute(id)
+            const redirectionUrlIterator = this.getRedirectById.execute(id)
+            
+            const redirectionUrl = (await redirectionUrlIterator.next()).value
             if (isError(redirectionUrl)) {
                 return res.status(redirectionUrl.code).json(redirectionUrl)
             }
 
             res.status(302).redirect(redirectionUrl)
+            await redirectionUrlIterator.next()
         } catch (error) {
             return res.status(500).json(
                 { code: 500, message: "Internal server error" }

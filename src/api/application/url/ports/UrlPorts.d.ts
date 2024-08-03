@@ -6,7 +6,7 @@ export declare interface CreateUrlPort {
 }
 
 export declare interface GetRedirectByIdPort {
-    execute(id: string): Promise<string | _Error>
+    execute(id: string): AsyncGenerator<undefined | string | _Error>
 }
 
 export declare interface GetUrlByIdPort {

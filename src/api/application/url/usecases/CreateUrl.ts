@@ -3,6 +3,8 @@ import { Repository } from "../../../adapters/repositories/ports/Repository";
 import { Url, UrlToCreate } from "../domain/Url";
 import { RedisClientType } from "redis";
 import { CreateUrlPort } from "../ports/UrlPorts";
+import { CONFIG } from "../../../config/Config";
+import { withExceptionCatch } from "../../decorators/WithExceptionCatch";
 
 @injectable()
 export class CreateUrlUseCase implements CreateUrlPort {
@@ -24,28 +26,21 @@ export class CreateUrlUseCase implements CreateUrlPort {
         private redis: RedisClientType
     ) {}
 
+
+    @withExceptionCatch
     public async execute(url: UrlToCreate) {
-        try {
-            const id = CreateUrlUseCase.generateId()
-            const insertData = {
-                id,
-                ...url,
-                createdAt: new Date().toISOString(),
-            }
+        const id = CreateUrlUseCase.generateId()
+        const insertData = {
+            id,
+            ...url,
+            createdAt: new Date().toISOString(),
+        }
 
             
-            await this.urlRepository.insert(insertData)
-            await this.redis.SET(id, url.to)                
+        await this.urlRepository.insert(insertData)
+        await this.redis.SET(id, url.to, { EX: CONFIG.redisExpiration })                
 
-            return {...insertData, usesCount: 0}
-        } catch (error) {
-            console.log(error)
-            return {
-                code: 503,
-                message: "Service unavailable"
-            }
-        }
+        return {...insertData, usesCount: 0}       
     }
-
 
 }

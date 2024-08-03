@@ -13,6 +13,8 @@ declare global {
             KEYSPACE?: string
             DATABASE_USERNAME?: string
             DATABASE_PASSWORD?: string
+
+            REDIS_EXPIRATION?: string
         }
     }
 }

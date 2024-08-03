@@ -3,6 +3,7 @@ import { Repository } from "../../../adapters/repositories/ports/Repository";
 import { Url, UrlToGetOne } from "../domain/Url";
 import { RedisClientType } from "redis";
 import { GetUrlByIdPort } from "../ports/UrlPorts";
+import { withExceptionCatch } from "../../decorators/WithExceptionCatch";
 
 @injectable()
 export class GetUrlByIdUseCase implements GetUrlByIdPort{
@@ -12,22 +13,16 @@ export class GetUrlByIdUseCase implements GetUrlByIdPort{
         private urlRepository: Repository<Url>
     ) {}
 
+    @withExceptionCatch
     public async execute(id: string) {
-        try {
-            const foundUrl = await this.urlRepository.get(id) as UrlToGetOne
-            if (!foundUrl) {
-                return {
-                    code: 404,
-                    message: "Url can not be found"
-                }
-            }
-
-            return foundUrl
-        } catch (error) {
+        const foundUrl = await this.urlRepository.get(id) as UrlToGetOne
+        if (!foundUrl) {
             return {
-                code: 503,
-                message: "Service unavailable"
+                code: 404,
+                message: "Url can not be found"
             }
         }
+
+        return foundUrl
     }
 }

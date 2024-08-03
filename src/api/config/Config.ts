@@ -11,6 +11,7 @@ export const CONFIG: IConfig = {
     keyspace: process.env.KEYSPACE || "miniurl",
     databasePassword: process.env.DATABASE_PASSWORD,
     databaseUsername: process.env.DATABASE_USERNAME,
+    redisExpiration: parseInt(process.env.REDIS_EXPIRATION || "172_800"),
 
     log(): void {
         console.log(`[Info] Web app loading with config:\nPORT: ${this.appPort}\nJWT SECRET: ${this.jwtSecret}\nJWT EXPIRATION: ${this.jwtExpiration}\nDATABASE HOST: ${this.databaseHost}\nDATACENTER: ${this.datacenter}\nKEYSPACE: ${this.keyspace}\n`)

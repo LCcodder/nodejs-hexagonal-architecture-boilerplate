@@ -5,6 +5,7 @@ export declare interface IConfig {
 
     jwtSecret: string
     jwtExpiration: string
+    redisExpiration: number
 
     databaseHost: string
     datacenter: string

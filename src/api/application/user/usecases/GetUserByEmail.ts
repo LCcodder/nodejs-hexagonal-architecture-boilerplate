@@ -3,6 +3,7 @@ import { Repository } from "../../../adapters/repositories/ports/Repository";
 import { User } from "../domain/User";
 import { GetUserByEmailPort } from "../ports/UserPorts";
 import { inject, injectable } from "tsyringe";
+import { withExceptionCatch } from "../../decorators/WithExceptionCatch";
 
 @injectable()
 export class GetUserByEmailUseCase implements GetUserByEmailPort {
@@ -10,23 +11,16 @@ export class GetUserByEmailUseCase implements GetUserByEmailPort {
         @inject("UserRepository") private userRepository: Repository<User>
     ) {}
 
+    @withExceptionCatch
     public async execute (email: string) {
-        try {
-            const foundUser = await this.userRepository.get(email) as User
-            if (!foundUser) {
-                return {
-                    code: 404,
-                    message: "User with that email not found"
-                }
-            }
-    
-            return foundUser
-            
-        } catch (error) {
+        const foundUser = await this.userRepository.get(email) as User
+        if (!foundUser) {
             return {
-                code: 503,
-                message: "Service unavailable"
+                code: 404,
+                message: "User with that email not found"
             }
         }
+    
+        return foundUser
     }
 }
