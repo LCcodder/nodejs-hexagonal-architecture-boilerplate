@@ -12,7 +12,7 @@ export const CONFIG: IConfig = {
     databasePassword: process.env.DATABASE_PASSWORD,
     databaseUsername: process.env.DATABASE_USERNAME,
     redisExpiration: parseInt(process.env.REDIS_EXPIRATION || "172_800"),
-
+    redisConnectionString: process.env.REDIS_CONNECTION_STRING,
     log(): void {
         console.log(`[Info] Web app loading with config:\nPORT: ${this.appPort}\nJWT SECRET: ${this.jwtSecret}\nJWT EXPIRATION: ${this.jwtExpiration}\nDATABASE HOST: ${this.databaseHost}\nDATACENTER: ${this.datacenter}\nKEYSPACE: ${this.keyspace}\n`)
     },

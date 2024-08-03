@@ -8,30 +8,42 @@ services:
       - REDIS_CONNECTION_STRING=redis://redis:6379/0
       - JWT_SECRET=fdkslhfdshgjldsngklds
       - JWT_EXPIRATION=48h
-      - DATABASE_HOST=localhost
+      - DATABASE_HOST=cassandra
       - DATACENTER=datacenter1
       - KEYSPACE=miniurl
     ports:
       - '8080:8080'
     expose:
       - '8080'
+    depends_on:
+      - cassandra
+      - redis
+      - init
+    networks:
+      - miniurl
 
   cassandra:
-      image: cassandra:3.11.2
+      image: cassandra:4.1.0
       container_name: cassandra
       ports:
         - "9042:9042"
-      environment:
-        - "MAX_HEAP_SIZE=256M"
-        - "HEAP_NEWSIZE=128M"
-      restart: always
+      expose:
+      - '9042'
+      restart: "no"
       volumes:
-        - ./out/cassandra_data:/var/lib/cassandra
-      healthcheck:
-        test: ["CMD", "cqlsh", "-u cassandra", "-p cassandra" ,"-e describe keyspaces"]
-        interval: 15s
-        timeout: 10s
-        retries: 10
+        - db:/var/lib/cassandra
+      networks:
+        - miniurl
+  init:
+    image: cassandra:4.1.0
+    depends_on:
+      - cassandra
+    restart: "no"
+    entrypoint: ["/init.sh"]
+    volumes:
+      - ./init.sh:/init.sh
+
+
 
   redis:
     image: redis:latest
@@ -43,7 +55,6 @@ services:
     environment:
       - REDIS_PORT=6379
       - REDIS_DATABASES=16
-    # depends_on: 
       
     networks:
       - miniurl
@@ -54,5 +65,7 @@ networks:
     driver: bridge
 
 volumes:
+  db:
+    driver: local
   cache:
     driver: local

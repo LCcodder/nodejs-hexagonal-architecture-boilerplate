@@ -30,7 +30,7 @@ export const injectDependencies = async (): Promise<CoreDependencies> => {
         CONFIG.keyspace
     ).client
 
-    const redisClient = await connectAndGetRedisInstance()
+    const redisClient = await connectAndGetRedisInstance(CONFIG.redisConnectionString)
     container.register<RedisClientType>(
         "RedisClient",
         { useValue: redisClient }
