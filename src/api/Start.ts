@@ -22,7 +22,7 @@ export default async function start (app: Application): Promise<void> {
     routeUserEndpoints(app, coreDependencies.userController)
     routeAuthEndpoints(app, coreDependencies.authController)
     routeUrlEndpoints(app, coreDependencies.urlController)
-    app.listen(CONFIG.appPort, "localhost", () => {
+    app.listen(CONFIG.appPort, "0.0.0.0", () => {
         console.log(`[Info] Listening incoming trafic at 0.0.0.0:${CONFIG.appPort}\n`)
     })
 }
