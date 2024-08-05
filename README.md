@@ -71,7 +71,7 @@
     "createdAt": "2024-08-05T12:44:11.705Z",
     "usesCount": 0
     ```
-7. `GET:/urls` (requires JWT in `Bearer` header) - Returns created URLs
+7. `GET:/urls/my` (requires JWT in `Bearer` header) - Returns created URLs
 
     Authorization:
     ```
