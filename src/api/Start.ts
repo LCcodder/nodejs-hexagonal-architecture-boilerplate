@@ -6,6 +6,8 @@ import { CassandraInstance } from "./infrastructure/database/CassandraInstance"
 import { CONFIG } from "./config/Config";
 import { httpLogger } from "./utils/PinoLogger";
 import { routeUrlEndpoints } from "./infrastructure/core/routers/url/UrlRouter";
+import { connectAndGetRedisInstance } from "./infrastructure/cache/RedisInstance";
+import { createKeyspace } from "./infrastructure/database/CreateKeyspace";
 const express = require("express")
 
 export default async function start (app: Application): Promise<void> {
@@ -17,7 +19,15 @@ export default async function start (app: Application): Promise<void> {
     }))
     // app.use(httpLogger)
 
-    const coreDependencies = await injectDependencies()
+    const cassandraClient = new CassandraInstance(
+        CONFIG.databaseHost,
+        CONFIG.datacenter,
+        CONFIG.keyspace
+    ).client
+    await createKeyspace(cassandraClient)
+    const redisClient = await connectAndGetRedisInstance(CONFIG.redisConnectionString)
+
+    const coreDependencies = await injectDependencies(cassandraClient, redisClient)
 
     routeUserEndpoints(app, coreDependencies.userController)
     routeAuthEndpoints(app, coreDependencies.authController)

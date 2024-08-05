@@ -18,7 +18,6 @@ services:
     depends_on:
       - cassandra
       - redis
-      - init
     networks:
       - miniurl
 
@@ -34,14 +33,6 @@ services:
         - db:/var/lib/cassandra
       networks:
         - miniurl
-  init:
-    image: cassandra:4.1.0
-    depends_on:
-      - cassandra
-    restart: "no"
-    entrypoint: ["/init.sh"]
-    volumes:
-      - ./init.sh:/init.sh
 
 
 

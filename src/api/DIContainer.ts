@@ -6,16 +6,14 @@ import { CreateUserUseCase } from './application/user/usecases/CreateUser';
 import UserController from './adapters/controllers/user/UserController';
 import AuthController from './adapters/controllers/auth/AuthController';
 import { AuthorizeUseCase } from './application/auth/usecases/Authorize';
-import { CassandraInstance } from './infrastructure/database/CassandraInstance';
-import { connectAndGetRedisInstance } from './infrastructure/cache/RedisInstance';
 import { RedisClientType } from 'redis';
 import { UrlRepository } from './adapters/repositories/url/UrlRepository';
 import UrlController from './adapters/controllers/url/UrlController';
 import { CreateUrlUseCase } from './application/url/usecases/CreateUrl';
 import { GetRedirectByIdUseCase } from './application/url/usecases/GetRedirectById';
 import { GetUrlByIdUseCase } from './application/url/usecases/GetUrlById';
-import { CONFIG } from './config/Config';
 import { GetUrlsByOwnerEmailUseCase } from './application/url/usecases/GetUrlsByOwnerEmail';
+import { Client } from 'cassandra-driver';
 
 export type CoreDependencies = {
     userController: UserController,
@@ -23,14 +21,12 @@ export type CoreDependencies = {
     urlController: UrlController
 }
 
-export const injectDependencies = async (): Promise<CoreDependencies> => {
-    const cassandraClient = new CassandraInstance(
-        CONFIG.databaseHost,
-        CONFIG.datacenter,
-        CONFIG.keyspace
-    ).client
+export const injectDependencies = async (
+    cassandraClient: Client, 
+    redisClient: RedisClientType): Promise<CoreDependencies> => {
+    
 
-    const redisClient = await connectAndGetRedisInstance(CONFIG.redisConnectionString)
+
     container.register<RedisClientType>(
         "RedisClient",
         { useValue: redisClient }
