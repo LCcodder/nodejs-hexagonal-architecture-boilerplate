@@ -10,7 +10,7 @@ services:
       - JWT_EXPIRATION=48h
       - DATABASE_HOST=cassandra
       - DATACENTER=datacenter1
-      - KEYSPACE=miniurl
+      - KEYSPACE=system
     ports:
       - '8080:8080'
     expose:
@@ -22,18 +22,22 @@ services:
       - miniurl
 
   cassandra:
-      image: cassandra:4.1.0
-      container_name: cassandra
-      ports:
-        - "9042:9042"
-      expose:
-      - '9042'
-      restart: "no"
-      volumes:
-        - db:/var/lib/cassandra
-      networks:
-        - miniurl
-
+    image: cassandra:4.1.0
+    container_name: cassandra
+    ports:
+      - "9042:9042"
+    expose:
+    - '9042'
+    restart: on-failure:10
+    volumes:
+      - db:/var/lib/cassandra
+    networks:
+      - miniurl
+    # healthcheck:
+    #   test: ["CMD", "cqlsh", "-u cassandra", "-p cassandra" ,"-e describe keyspaces"]
+    #   interval: 15s
+    #   timeout: 10s
+    #   retries: 10
 
 
   redis:
