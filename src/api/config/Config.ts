@@ -19,6 +19,6 @@ export const CONFIG: IConfig = {
     launchDelay: appCfg.launch_delay_ms || 0,
 
     log(): void {
-        logger.info(`[Info] Web app loading with config:\nPORT: ${this.appPort}\nJWT SECRET: ${this.jwtSecret}\nJWT EXPIRATION: ${this.jwtExpiration}\nDATABASE HOST: ${this.databaseHost}\nDATACENTER: ${this.datacenter}\nKEYSPACE: ${this.keyspace}\nREDIS EXPIRATION TIME: ${this.redisExpiration}\nREDIS CONNECTION: ${this.redisConnectionString}\n`)
+        logger.info(`Web app loading with config:\nPORT: ${this.appPort}\nJWT SECRET: ${this.jwtSecret}\nJWT EXPIRATION: ${this.jwtExpiration}\nDATABASE HOST: ${this.databaseHost}\nDATACENTER: ${this.datacenter}\nKEYSPACE: ${this.keyspace}\nREDIS EXPIRATION TIME: ${this.redisExpiration}\nREDIS CONNECTION: ${this.redisConnectionString}\n`)
     },
 }
