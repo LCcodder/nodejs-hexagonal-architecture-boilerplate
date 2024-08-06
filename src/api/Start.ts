@@ -4,7 +4,7 @@ import { routeAuthEndpoints } from "./infrastructure/core/routers/auth/AuthRoute
 import { routeUserEndpoints } from "./infrastructure/core/routers/user/UserRouter"
 import { CassandraInstance } from "./infrastructure/database/CassandraInstance"
 import { CONFIG } from "./config/Config";
-import { httpLogger } from "./utils/PinoLogger";
+import { httpLogger, logger } from "./utils/PinoLogger";
 import { routeUrlEndpoints } from "./infrastructure/core/routers/url/UrlRouter";
 import { connectAndGetRedisInstance } from "./infrastructure/cache/RedisInstance";
 import { connectAndInitKeyspace } from "./infrastructure/database/InitKeyspace";
@@ -17,7 +17,7 @@ export default async function start (app: Application): Promise<void> {
     app.use(express.urlencoded({
         extended: true
     }))
-    // app.use(httpLogger)
+    app.use(httpLogger)
 
     const cassandraClient = new CassandraInstance(
         CONFIG.databaseHost,
@@ -35,6 +35,6 @@ export default async function start (app: Application): Promise<void> {
     routeUrlEndpoints(app, coreDependencies.urlController)
     
     app.listen(CONFIG.appPort, "0.0.0.0", () => {
-        console.log(`[Info] Listening incoming trafic at 0.0.0.0:${CONFIG.appPort}\n`)
+        logger.info(`Listening incoming trafic at 0.0.0.0:${CONFIG.appPort}\n`)
     })
 }

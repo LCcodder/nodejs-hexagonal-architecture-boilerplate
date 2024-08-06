@@ -1,14 +1,14 @@
 import pinoHttp from 'pino-http'
 import pino from 'pino'
 
-const logger = pino({
+export const logger = pino({
     level: 'info',
     transport: {
         target: 'pino-pretty',
 
         options: {
             colorize: true,
-            ignore: 'pid,hostname,res,req',
+            ignore: 'pid,hostname',
             timestampKey: 'time',
             levelFirst: true,
             messageFormat: true,
@@ -19,7 +19,7 @@ const logger = pino({
 export const httpLogger = pinoHttp({
     logger: logger,
     formatters: {
-        level(label, number) {
+        level(label, _number) {
             return { level: label }
         },
     }

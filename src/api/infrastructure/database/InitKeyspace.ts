@@ -1,10 +1,10 @@
 import { Client } from "cassandra-driver";
-import { InitCfg } from "../../types/InitCfg";
+import { logger } from "../../utils/PinoLogger";
 
 export const connectAndInitKeyspace = async (client: Client) => {
     try {
         await client.connect()
-        console.log(`[Info] Creating keyspace...`)
+        logger.info(`Creating keyspace...`)
         const queries = [
             "CREATE KEYSPACE IF NOT EXISTS miniurl WITH REPLICATION = { 'class' : 'NetworkTopologyStrategy', 'datacenter1' : 3 };",
             "USE miniurl;",
@@ -16,6 +16,6 @@ export const connectAndInitKeyspace = async (client: Client) => {
             await client.execute(query)
         }
     } catch(error) {
-        console.log(error)
+        logger.warn(error)
     }
 }

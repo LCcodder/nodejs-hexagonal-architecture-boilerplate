@@ -4,10 +4,8 @@ services:
     build: .
     restart: always
     environment:
-      - APP_PORT=8080
       - REDIS_CONNECTION_STRING=redis://redis:6379/0
       - JWT_SECRET=fdkslhfdshgjldsngklds
-      - JWT_EXPIRATION=48h
       - DATABASE_HOST=cassandra
       - DATACENTER=datacenter1
       - KEYSPACE=system

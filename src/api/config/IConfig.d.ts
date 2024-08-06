@@ -13,4 +13,7 @@ export declare interface IConfig {
     keyspace: string
     databaseUsername?: string
     databasePassword?: string
+
+
+    launchDelay: number
 }

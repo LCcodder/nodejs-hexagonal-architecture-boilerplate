@@ -1,5 +1,6 @@
 import {Client, auth as Auth} from "cassandra-driver"
 import { ICassandraInstance } from "./ICassandraInstance";
+import { logger } from "../../utils/PinoLogger";
 
 
 
@@ -23,7 +24,7 @@ export class CassandraInstance implements ICassandraInstance {
                 authProvider: auth ? new Auth.PlainTextAuthProvider(auth?.username, auth?.password) : undefined
             }
         );
-        console.log(`[Info] Connected to Cassandra instance at ${hoster} - ${datacenter} at keyspace: ${keyspace}\n`)
+        logger.info(`Connected to Cassandra instance at ${hoster} - ${datacenter} at keyspace: ${keyspace}\n`)
     }
 
     public get client(): Client {
