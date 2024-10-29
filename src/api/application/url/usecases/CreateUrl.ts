@@ -12,6 +12,7 @@ export class CreateUrlUseCase implements CreateUrlPort {
         const symbols = "1234567890qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM"
         let id = ""
         for (let i = 0; i < 6; i++) {
+            // gets one random symbol from 'symbols' string
             id += symbols[
                 Math.floor(Math.random() * ((symbols.length - 1) - 0 + 1) + 0)
             ]
@@ -30,7 +31,7 @@ export class CreateUrlUseCase implements CreateUrlPort {
     @withExceptionCatch
     public async execute(url: UrlToCreate) {
         const id = CreateUrlUseCase.generateId()
-        const insertData = {
+        let insertData = {
             id,
             ...url,
             createdAt: new Date().toISOString(),

@@ -5,9 +5,18 @@ import { UrlToCreate } from "../../../application/url/domain/Url";
 import { extractJwtPayload } from "../../../application/auth/jwt/JwtPayloadExtractor";
 import { extractToken } from "../../../utils/TokenExtractor";
 import { isError } from "../../../types/guards/IsError";
+import { InternalServerError } from "../common/InternalServerErrorForResponse";
 
 @injectable()
 export default class UrlController {
+    private static addProtocolToUrl(url: string) {
+        const protocol = url.slice(0, 4) 
+        if (protocol !== "http") {
+            return `http://${url}`
+        }
+        return url
+    }
+
     constructor(
         @inject("CreateUrlUseCase")
         private createUrl: CreateUrlPort,
@@ -25,17 +34,15 @@ export default class UrlController {
     public registerUrl = async (req: Request, res: Response) => {
         try {
             const urlData = req.body as Pick<UrlToCreate, "to">
-            const payload = extractJwtPayload(
+            const { email } = extractJwtPayload(
                 extractToken(req) as string
-            )
+            ) as { email:string }
 
-            const protocol = urlData.to.slice(0, 4) 
-            if (protocol !== "http") {
-                urlData.to = `http://${urlData.to}`
-            }
+            
+            urlData.to = UrlController.addProtocolToUrl(urlData.to)
 
             const createdUrl = await this.createUrl.execute(
-                { ...urlData, ownerEmail: payload?.email }
+                { ...urlData, ownerEmail: email }
             )
             if (isError(createdUrl)) {
                 return res.status(createdUrl.code).json(createdUrl)
@@ -43,9 +50,7 @@ export default class UrlController {
 
             return res.status(201).json(createdUrl)
         } catch (error) {
-            return res.status(500).json(
-                { code: 500, message: "Internal server error" }
-            )
+            return InternalServerError(res)
         }
     }
 
@@ -63,9 +68,7 @@ export default class UrlController {
             res.status(302).redirect(redirectionUrl)
             await redirectionUrlIterator.next()
         } catch (error) {
-            return res.status(500).json(
-                { code: 500, message: "Internal server error" }
-            )           
+            return InternalServerError(res)     
         }
     }
 
@@ -80,19 +83,17 @@ export default class UrlController {
 
             return res.status(200).json(url)
         } catch (error) {
-            return res.status(500).json(
-                { code: 500, message: "Internal server error" }
-            )
+            return InternalServerError(res)
         }
     }
 
     public getCreatedUrls = async (req: Request, res: Response) => {
         try {
-            const payload = extractJwtPayload(
+            const { email } = extractJwtPayload(
                 extractToken(req) as string
-            )
+            ) as { email: string }
 
-            const urls = await this.getUrlsByOwnerEmail.execute(payload?.email as string)
+            const urls = await this.getUrlsByOwnerEmail.execute(email)
             if (isError(urls)) {
                 return res.status(urls.code).json(urls)
             }
@@ -100,9 +101,7 @@ export default class UrlController {
             return res.status(200).json(urls)
 
         } catch (error) {
-            return res.status(500).json(
-                { code: 500, message: "Internal server error" }
-            )
+            return InternalServerError(res)
         }
     }
 }

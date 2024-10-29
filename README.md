@@ -62,7 +62,7 @@
     "createdAt": "2024-08-05T12:44:11.705Z",
     "usesCount": 0
     ```
-5. `GET:/:id` - Redirects to initial URL by id param
+5. `GET:/r/:id` - Redirects to initial URL by id param
 6. `GET:/urls/:id` - Returns URL object
     Response:
     ```JSON

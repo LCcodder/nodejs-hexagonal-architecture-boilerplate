@@ -3,16 +3,11 @@ import { AuthorizePort } from "../../../application/auth/ports/AuthPorts";
 import {Request, Response} from "express"
 import { isError } from "../../../types/guards/IsError";
 import { UserCredentials } from "../../../application/user/domain/User";
+import { InternalServerError } from "../common/InternalServerErrorForResponse";
 
 
 @injectable()
 export default class AuthController {
-    private static readonly prefix_ = "auth"
-
-    static get prefix(): string {
-        return `/${AuthController.prefix_}/`
-    }
-
     constructor(
         @inject("AuthorizeUseCase")
         private authorize: AuthorizePort
@@ -29,9 +24,9 @@ export default class AuthController {
 
             return res.status(200).json(generatedToken)
         } catch (error) {
-            return res.status(500).json(
-                { code: 500, message: "Internal server error" }
-            )
+            return InternalServerError(res)
         }
     }
 }
+
+// AuthController.prefix

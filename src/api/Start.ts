@@ -1,11 +1,11 @@
 import { Application } from "express";
 import { injectDependencies } from "./DIContainer"
-import { routeAuthEndpoints } from "./infrastructure/core/routers/auth/AuthRouter"
-import { routeUserEndpoints } from "./infrastructure/core/routers/user/UserRouter"
+import { routeAuthEndpoints } from "./infrastructure/web/routers/auth/AuthRouter"
+import { routeUserEndpoints } from "./infrastructure/web/routers/user/UserRouter"
 import { CassandraInstance } from "./infrastructure/database/CassandraInstance"
 import { CONFIG } from "./config/Config";
 import { httpLogger, logger } from "./utils/PinoLogger";
-import { routeUrlEndpoints } from "./infrastructure/core/routers/url/UrlRouter";
+import { routeUrlEndpoints } from "./infrastructure/web/routers/url/UrlRouter";
 import { connectAndGetRedisInstance } from "./infrastructure/cache/RedisInstance";
 import { connectAndInitKeyspace } from "./infrastructure/database/InitKeyspace";
 const express = require("express")

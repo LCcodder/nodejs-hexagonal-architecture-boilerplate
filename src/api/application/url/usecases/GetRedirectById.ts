@@ -4,7 +4,6 @@ import { Url } from "../domain/Url";
 import { RedisClientType } from "redis";
 import { GetRedirectByIdPort } from "../ports/UrlPorts";
 import { CONFIG } from "../../../config/Config";
-import { withExceptionCatch } from "../../decorators/WithExceptionCatch";
 
 @injectable()
 export class GetRedirectByIdUseCase implements GetRedirectByIdPort{
@@ -47,6 +46,7 @@ export class GetRedirectByIdUseCase implements GetRedirectByIdPort{
                 message: "Can not find redirect url"
             }
 
+        // can't use exception catch decorator in generator method, so i made basic catch statement
         } catch (error) {
             return {
                 code: 503,

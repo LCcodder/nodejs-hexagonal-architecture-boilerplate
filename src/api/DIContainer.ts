@@ -24,8 +24,6 @@ export type CoreDependencies = {
 export const injectDependencies = async (
     cassandraClient: Client, 
     redisClient: RedisClientType): Promise<CoreDependencies> => {
-    
-
 
     container.register<RedisClientType>(
         "RedisClient",

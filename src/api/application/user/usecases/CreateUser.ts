@@ -26,7 +26,7 @@ export class CreateUserUseCase implements CreateUserPort {
             ...user,
             createdAt: new Date().toISOString(),
         }
-            insertData.password = await bcrypt.hash(insertData.password, 10)
+        insertData.password = await bcrypt.hash(insertData.password, 10)
 
         await this.userRepository.insert(insertData)
     
