@@ -1,7 +1,6 @@
 import { inject, injectable } from "tsyringe";
 import { Repository } from "../../../adapters/repositories/ports/Repository";
 import { Url, UrlToGetOne } from "../domain/Url";
-import { RedisClientType } from "redis";
 import { GetUrlByIdPort } from "../ports/UrlPorts";
 import { withExceptionCatch } from "../../decorators/WithExceptionCatch";
 

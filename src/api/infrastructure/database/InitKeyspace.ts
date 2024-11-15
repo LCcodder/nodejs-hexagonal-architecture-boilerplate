@@ -1,5 +1,5 @@
 import { Client } from "cassandra-driver";
-import { logger } from "../../utils/PinoLogger";
+import { logger } from "../../shared/utils/PinoLogger";
 
 export const connectAndInitKeyspace = async (client: Client) => {
     try {

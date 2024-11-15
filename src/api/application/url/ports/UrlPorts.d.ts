@@ -1,4 +1,4 @@
-import { _Error } from "../../../types/_Error";
+import { _Error } from "../../../shared/types/_Error";
 import { Url, UrlToCreate, UrlToGetMany, UrlToGetOne } from "../domain/Url";
 
 export declare interface CreateUrlPort {

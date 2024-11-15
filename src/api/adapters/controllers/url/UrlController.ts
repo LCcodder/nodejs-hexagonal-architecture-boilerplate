@@ -3,8 +3,8 @@ import { CreateUrlPort, GetRedirectByIdPort, GetUrlByIdPort, GetUrlsByOwnerEmail
 import { Request, Response } from "express"
 import { UrlToCreate } from "../../../application/url/domain/Url";
 import { extractJwtPayload } from "../../../application/auth/jwt/JwtPayloadExtractor";
-import { extractToken } from "../../../utils/TokenExtractor";
-import { isError } from "../../../types/guards/IsError";
+import { extractToken } from "../../../shared/utils/TokenExtractor";
+import { isError } from "../../../shared/types/guards/IsError";
 import { InternalServerError } from "../common/InternalServerErrorForResponse";
 
 @injectable()

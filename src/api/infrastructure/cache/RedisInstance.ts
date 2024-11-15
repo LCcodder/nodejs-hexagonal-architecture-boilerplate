@@ -1,5 +1,5 @@
 import { createClient, RedisClientType } from 'redis';
-import { logger } from '../../utils/PinoLogger';
+import { logger } from '../../shared/utils/PinoLogger';
 
 export const connectAndGetRedisInstance = async (connectionString?: string): Promise<RedisClientType> => {
     const client = await createClient({ url: connectionString })

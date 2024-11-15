@@ -2,9 +2,9 @@ import 'reflect-metadata';
 
 import { Client } from "cassandra-driver";
 import { Url } from "../../../application/url/domain/Url";
-import { _Error } from "../../../types/_Error";
+import { _Error } from "../../../shared/types/_Error";
 import { DeepOptional } from "typing-assets";
-import { stringifyForQuery } from "../../../utils/StringifyInterceptor";
+import { stringifyForQuery } from "../../../shared/utils/StringifyInterceptor";
 import { Repository } from "../ports/Repository";
 import { User } from "../../../application/user/domain/User";
 import { inject, injectable, singleton } from "tsyringe";

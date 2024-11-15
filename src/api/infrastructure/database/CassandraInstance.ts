@@ -1,6 +1,6 @@
 import {Client, auth as Auth} from "cassandra-driver"
 import { ICassandraInstance } from "./ICassandraInstance";
-import { logger } from "../../utils/PinoLogger";
+import { logger } from "../../shared/utils/PinoLogger";
 
 
 

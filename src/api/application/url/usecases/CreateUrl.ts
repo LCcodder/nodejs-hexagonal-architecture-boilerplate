@@ -3,7 +3,7 @@ import { Repository } from "../../../adapters/repositories/ports/Repository";
 import { Url, UrlToCreate } from "../domain/Url";
 import { RedisClientType } from "redis";
 import { CreateUrlPort } from "../ports/UrlPorts";
-import { CONFIG } from "../../../config/Config";
+import { CONFIG } from "../../../shared/config/Config";
 import { withExceptionCatch } from "../../decorators/WithExceptionCatch";
 
 @injectable()

@@ -1,4 +1,4 @@
-import { _Error } from "../../../types/_Error"
+import { _Error } from "../../../shared/types/_Error"
 import { UserToCreate, UserToGet, User } from "../domain/User"
 
 export declare interface CreateUserPort {

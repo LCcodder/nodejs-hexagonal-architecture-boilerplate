@@ -1,12 +1,12 @@
 import {Request, Response} from "express"
 import { User, UserToCreate } from "../../../application/user/domain/User"
 import { CreateUserPort, GetUserByEmailPort } from "../../../application/user/ports/UserPorts"
-import { _Error } from "../../../types/_Error"
+import { _Error } from "../../../shared/types/_Error"
 import { inject, injectable } from "tsyringe"
 import { excludeProperties } from "typing-assets"
-import { isError } from "../../../types/guards/IsError"
+import { isError } from "../../../shared/types/guards/IsError"
 import { extractJwtPayload } from "../../../application/auth/jwt/JwtPayloadExtractor"
-import { extractToken } from "../../../utils/TokenExtractor"
+import { extractToken } from "../../../shared/utils/TokenExtractor"
 import { InternalServerError } from "../common/InternalServerErrorForResponse"
 
 @injectable()

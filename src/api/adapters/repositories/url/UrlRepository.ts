@@ -1,8 +1,8 @@
 import { Client } from "cassandra-driver";
 import { Url, UrlToGetOne } from "../../../application/url/domain/Url";
-import { _Error } from "../../../types/_Error";
+import { _Error } from "../../../shared/types/_Error";
 import { DeepOptional, excludeProperties } from "typing-assets";
-import { stringifyForQuery } from "../../../utils/StringifyInterceptor";
+import { stringifyForQuery } from "../../../shared/utils/StringifyInterceptor";
 import { Repository } from "../ports/Repository";
 
 export class UrlRepository extends Repository<Url> {

@@ -1,4 +1,4 @@
-import { _Error } from "../../../types/_Error";
+import { _Error } from "../../../shared/types/_Error";
 
 export declare interface AuthorizePort {
     execute(email: string, password: string): Promise<

@@ -3,8 +3,8 @@ import { injectDependencies } from "./DIContainer"
 import { routeAuthEndpoints } from "./infrastructure/web/routers/auth/AuthRouter"
 import { routeUserEndpoints } from "./infrastructure/web/routers/user/UserRouter"
 import { CassandraInstance } from "./infrastructure/database/CassandraInstance"
-import { CONFIG } from "./config/Config";
-import { httpLogger, logger } from "./utils/PinoLogger";
+import { CONFIG } from "./shared/config/Config";
+import { httpLogger, logger } from "./shared/utils/PinoLogger";
 import { routeUrlEndpoints } from "./infrastructure/web/routers/url/UrlRouter";
 import { connectAndGetRedisInstance } from "./infrastructure/cache/RedisInstance";
 import { connectAndInitKeyspace } from "./infrastructure/database/InitKeyspace";

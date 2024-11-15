@@ -1,9 +1,9 @@
 import { inject, injectable } from "tsyringe";
 import { GetUserByEmailPort } from "../../user/ports/UserPorts";
-import { isError } from "../../../types/guards/IsError";
+import { isError } from "../../../shared/types/guards/IsError";
 import bcrypt from "bcrypt"
 import { generateToken } from "../jwt/TokenGenerator";
-import { CONFIG } from "../../../config/Config";
+import { CONFIG } from "../../../shared/config/Config";
 import { AuthorizePort } from "../ports/AuthPorts";
 import { withExceptionCatch } from "../../decorators/WithExceptionCatch";
 

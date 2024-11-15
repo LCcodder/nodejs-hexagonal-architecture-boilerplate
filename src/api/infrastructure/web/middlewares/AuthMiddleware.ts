@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express";
-import { extractToken } from "../../../utils/TokenExtractor";
+import { extractToken } from "../../../shared/utils/TokenExtractor";
 import { verify } from "jsonwebtoken";
-import { CONFIG } from "../../../config/Config";
+import { CONFIG } from "../../../shared/config/Config";
 
 export const authenticate = (req: Request, res: Response, next: NextFunction) => {
     try {

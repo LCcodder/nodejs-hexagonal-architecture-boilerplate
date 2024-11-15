@@ -1,6 +1,6 @@
 import { logger } from "../utils/PinoLogger";
 import { IConfig } from "./IConfig";
-import appCfg from "../../../app-cfg.json"
+import appCfg from "../../../../app-cfg.json"
 
 export const CONFIG: IConfig = {
     appPort: appCfg.app_port || 8080,

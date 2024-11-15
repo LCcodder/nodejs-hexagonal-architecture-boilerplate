@@ -1,4 +1,4 @@
-import { CONFIG } from "./api/config/Config"
+import { CONFIG } from "./api/shared/config/Config"
 import start from "./api/Start"
 const express = require("express")
 

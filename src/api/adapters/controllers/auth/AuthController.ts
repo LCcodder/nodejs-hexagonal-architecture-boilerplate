@@ -1,7 +1,7 @@
 import { inject, injectable } from "tsyringe";
 import { AuthorizePort } from "../../../application/auth/ports/AuthPorts";
 import {Request, Response} from "express"
-import { isError } from "../../../types/guards/IsError";
+import { isError } from "../../../shared/types/guards/IsError";
 import { UserCredentials } from "../../../application/user/domain/User";
 import { InternalServerError } from "../common/InternalServerErrorForResponse";
 

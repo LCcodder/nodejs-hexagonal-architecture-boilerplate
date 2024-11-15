@@ -3,7 +3,7 @@ import { Repository } from "../../../adapters/repositories/ports/Repository";
 import { Url } from "../domain/Url";
 import { RedisClientType } from "redis";
 import { GetRedirectByIdPort } from "../ports/UrlPorts";
-import { CONFIG } from "../../../config/Config";
+import { CONFIG } from "../../../shared/config/Config";
 
 @injectable()
 export class GetRedirectByIdUseCase implements GetRedirectByIdPort{

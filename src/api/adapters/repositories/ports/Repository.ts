@@ -1,5 +1,5 @@
 import { Client } from "cassandra-driver";
-import { _Error } from "../../../types/_Error";
+import { _Error } from "../../../shared/types/_Error";
 import { DeepOptional } from "typing-assets";
 
 
