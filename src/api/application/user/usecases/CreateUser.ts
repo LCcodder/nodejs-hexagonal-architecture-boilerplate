@@ -4,7 +4,8 @@ import { excludeProperties } from "typing-assets";
 import { CreateUserPort } from "../ports/UserPorts";
 import { inject, injectable } from "tsyringe";
 import bcrypt from "bcrypt";
-import { withExceptionCatch } from "../../decorators/WithExceptionCatch";
+import { withExceptionCatch } from "../../../shared/decorators/WithExceptionCatch";
+import { USER_ALREADY_EXISTS } from "../../../shared/errors/UserErrors";
 
 @injectable()
 export class CreateUserUseCase implements CreateUserPort {
@@ -16,10 +17,7 @@ export class CreateUserUseCase implements CreateUserPort {
     public async execute (user: UserToCreate) {
         const foundUser = await this.userRepository.get(user.email)
         if (foundUser) {
-            return {
-                code: 400,
-                message: "User with that email already exists"
-            }
+            return USER_ALREADY_EXISTS
         }
     
         const insertData = {
@@ -34,6 +32,5 @@ export class CreateUserUseCase implements CreateUserPort {
             insertData,
             "password"
         )
-    
     }
 }

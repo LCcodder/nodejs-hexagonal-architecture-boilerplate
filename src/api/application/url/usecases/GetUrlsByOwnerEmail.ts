@@ -2,7 +2,7 @@ import { inject, injectable } from "tsyringe";
 import { Repository } from "../../../adapters/repositories/ports/Repository";
 import { Url } from "../domain/Url";
 import { GetUrlsByOwnerEmailPort } from "../ports/UrlPorts";
-import { withExceptionCatch } from "../../decorators/WithExceptionCatch";
+import { withExceptionCatch } from "../../../shared/decorators/WithExceptionCatch";
 
 @injectable()
 export class GetUrlsByOwnerEmailUseCase implements GetUrlsByOwnerEmailPort {

@@ -7,13 +7,14 @@ import { excludeProperties } from "typing-assets"
 import { isError } from "../../../shared/types/guards/IsError"
 import { extractJwtPayload } from "../../../application/auth/jwt/JwtPayloadExtractor"
 import { extractToken } from "../../../shared/utils/TokenExtractor"
-import { InternalServerError } from "../common/InternalServerErrorForResponse"
+import { InternalServerError } from "../../../shared/utils/InternalServerErrorForResponse"
 
 @injectable()
 export default class UserController {
     constructor(
         @inject("CreateUserUseCase")
         private createUser: CreateUserPort,
+        
         @inject("GetUserByEmailUseCase")
         private getUserByEmail: GetUserByEmailPort
     ) {}
@@ -30,7 +31,7 @@ export default class UserController {
 
             return res.status(201).json(registeredUser)
 
-        } catch (error) {
+        } catch {
             return InternalServerError(res)
         }
     }
@@ -50,7 +51,7 @@ export default class UserController {
 
             return res.status(200).json(profile)
 
-        } catch (error) {
+        } catch {
             return InternalServerError(res)
         }
     }

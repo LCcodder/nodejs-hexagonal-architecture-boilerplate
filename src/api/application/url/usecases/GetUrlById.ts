@@ -2,7 +2,8 @@ import { inject, injectable } from "tsyringe";
 import { Repository } from "../../../adapters/repositories/ports/Repository";
 import { Url, UrlToGetOne } from "../domain/Url";
 import { GetUrlByIdPort } from "../ports/UrlPorts";
-import { withExceptionCatch } from "../../decorators/WithExceptionCatch";
+import { withExceptionCatch } from "../../../shared/decorators/WithExceptionCatch";
+import { URL_NOT_FOUND } from "../../../shared/errors/UrlErrors";
 
 @injectable()
 export class GetUrlByIdUseCase implements GetUrlByIdPort{
@@ -16,10 +17,7 @@ export class GetUrlByIdUseCase implements GetUrlByIdPort{
     public async execute(id: string) {
         const foundUrl = await this.urlRepository.get(id) as UrlToGetOne
         if (!foundUrl) {
-            return {
-                code: 404,
-                message: "Url can not be found"
-            }
+            return URL_NOT_FOUND
         }
 
         return foundUrl

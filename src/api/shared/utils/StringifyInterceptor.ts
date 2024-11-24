@@ -1,3 +1,4 @@
+// @ts-nocheck
 export const stringifyForQuery = <T>(datastream: T): string => {
     if (Array.isArray(datastream)) {
         return `[${datastream}]`

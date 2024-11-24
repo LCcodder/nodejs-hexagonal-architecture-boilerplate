@@ -1,5 +1,4 @@
 {
-    "launch_delay_ms": 40000,
     "jwt_expiration": "48h",
     "redis_expiration": 172800,
     "app_port": 8080

@@ -1,9 +1,9 @@
-import { excludeProperties } from "typing-assets";
 import { Repository } from "../../../adapters/repositories/ports/Repository";
 import { User } from "../domain/User";
 import { GetUserByEmailPort } from "../ports/UserPorts";
 import { inject, injectable } from "tsyringe";
-import { withExceptionCatch } from "../../decorators/WithExceptionCatch";
+import { withExceptionCatch } from "../../../shared/decorators/WithExceptionCatch";
+import { USER_NOT_FOUND } from "../../../shared/errors/UserErrors";
 
 @injectable()
 export class GetUserByEmailUseCase implements GetUserByEmailPort {
@@ -15,10 +15,7 @@ export class GetUserByEmailUseCase implements GetUserByEmailPort {
     public async execute (email: string) {
         const foundUser = await this.userRepository.get(email) as User
         if (!foundUser) {
-            return {
-                code: 404,
-                message: "User with that email not found"
-            }
+            return USER_NOT_FOUND
         }
     
         return foundUser

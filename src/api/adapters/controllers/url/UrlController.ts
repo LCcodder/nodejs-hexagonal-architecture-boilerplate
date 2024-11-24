@@ -5,7 +5,7 @@ import { UrlToCreate } from "../../../application/url/domain/Url";
 import { extractJwtPayload } from "../../../application/auth/jwt/JwtPayloadExtractor";
 import { extractToken } from "../../../shared/utils/TokenExtractor";
 import { isError } from "../../../shared/types/guards/IsError";
-import { InternalServerError } from "../common/InternalServerErrorForResponse";
+import { InternalServerError } from "../../../shared/utils/InternalServerErrorForResponse";
 
 @injectable()
 export default class UrlController {
@@ -49,7 +49,7 @@ export default class UrlController {
             }
 
             return res.status(201).json(createdUrl)
-        } catch (error) {
+        } catch {
             return InternalServerError(res)
         }
     }
@@ -67,7 +67,7 @@ export default class UrlController {
 
             res.status(302).redirect(redirectionUrl)
             await redirectionUrlIterator.next()
-        } catch (error) {
+        } catch {
             return InternalServerError(res)     
         }
     }
@@ -82,7 +82,7 @@ export default class UrlController {
             }
 
             return res.status(200).json(url)
-        } catch (error) {
+        } catch {
             return InternalServerError(res)
         }
     }
@@ -100,7 +100,7 @@ export default class UrlController {
 
             return res.status(200).json(urls)
 
-        } catch (error) {
+        } catch {
             return InternalServerError(res)
         }
     }

@@ -3,7 +3,7 @@ import { AuthorizePort } from "../../../application/auth/ports/AuthPorts";
 import {Request, Response} from "express"
 import { isError } from "../../../shared/types/guards/IsError";
 import { UserCredentials } from "../../../application/user/domain/User";
-import { InternalServerError } from "../common/InternalServerErrorForResponse";
+import { InternalServerError } from "../../../shared/utils/InternalServerErrorForResponse";
 
 
 @injectable()
@@ -23,10 +23,8 @@ export default class AuthController {
             }
 
             return res.status(200).json(generatedToken)
-        } catch (error) {
+        } catch {
             return InternalServerError(res)
         }
     }
 }
-
-// AuthController.prefix

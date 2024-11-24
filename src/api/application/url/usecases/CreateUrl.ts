@@ -4,7 +4,7 @@ import { Url, UrlToCreate } from "../domain/Url";
 import { RedisClientType } from "redis";
 import { CreateUrlPort } from "../ports/UrlPorts";
 import { CONFIG } from "../../../shared/config/Config";
-import { withExceptionCatch } from "../../decorators/WithExceptionCatch";
+import { withExceptionCatch } from "../../../shared/decorators/WithExceptionCatch";
 
 @injectable()
 export class CreateUrlUseCase implements CreateUrlPort {
@@ -37,7 +37,6 @@ export class CreateUrlUseCase implements CreateUrlPort {
             createdAt: new Date().toISOString(),
         }
 
-            
         await this.urlRepository.insert(insertData)
         await this.redis.SET(id, url.to, { EX: CONFIG.redisExpiration })                
 

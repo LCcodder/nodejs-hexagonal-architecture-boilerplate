@@ -2,12 +2,12 @@ import { Application } from "express";
 import { injectDependencies } from "./DIContainer"
 import { routeAuthEndpoints } from "./infrastructure/web/routers/auth/AuthRouter"
 import { routeUserEndpoints } from "./infrastructure/web/routers/user/UserRouter"
-import { CassandraInstance } from "./infrastructure/database/CassandraInstance"
+import { CassandraInstance } from "./infrastructure/storage/database/CassandraInstance"
 import { CONFIG } from "./shared/config/Config";
-import { httpLogger, logger } from "./shared/utils/PinoLogger";
+import { httpLogger, logger } from "./infrastructure/web/logger/PinoLogger";
 import { routeUrlEndpoints } from "./infrastructure/web/routers/url/UrlRouter";
-import { connectAndGetRedisInstance } from "./infrastructure/cache/RedisInstance";
-import { connectAndInitKeyspace } from "./infrastructure/database/InitKeyspace";
+import { connectAndGetRedisInstance } from "./infrastructure/storage/cache/RedisInstance";
+import { connectAndInitKeyspace } from "./infrastructure/storage/database/InitKeyspace";
 const express = require("express")
 
 export default async function start (app: Application): Promise<void> {

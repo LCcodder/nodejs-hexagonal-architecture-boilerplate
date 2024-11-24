@@ -4,8 +4,4 @@ const express = require("express")
 
 
 const app = express()
-if (CONFIG.launchDelay > 0) {
-    setTimeout(() => start(app), CONFIG.launchDelay)
-} else {
-    start(app)
-}
+setTimeout(() => start(app), CONFIG.launchDelay)
