@@ -31,11 +31,11 @@ services:
       - db:/var/lib/cassandra
     networks:
       - miniurl
-    # healthcheck:
-    #   test: ["CMD", "cqlsh", "-u cassandra", "-p cassandra" ,"-e describe keyspaces"]
-    #   interval: 15s
-    #   timeout: 10s
-    #   retries: 10
+    healthcheck:
+      test: ["CMD", "cqlsh", "-u cassandra", "-p cassandra" ,"-e describe keyspaces"]
+      interval: 10s
+      timeout: 10s
+      retries: 15
 
 
   redis:

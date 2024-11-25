@@ -95,9 +95,9 @@ To launch application run:
 docker compose up --build
 ```
 
-If app throws cassandra connection error increase `on_launch_cooldown_ms` field value in `init-cfg.json`
++ If app throws cassandra connection error reload app container
 
-If you want launch app without docker you can find keyspace creation statements in `init_keyspace.cql` file
++ If you want launch app without docker you can find keyspace creation statements in `init_keyspace.cql` file
 
 ---
 ### Made by [LCcodder](https://github.com/LCcodder)
