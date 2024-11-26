@@ -6,6 +6,7 @@ import { extractJwtPayload } from "../../../application/auth/jwt/JwtPayloadExtra
 import { extractToken } from "../../../shared/utils/TokenExtractor";
 import { isError } from "../../../shared/types/guards/IsError";
 import { InternalServerError } from "../../../shared/utils/InternalServerErrorForResponse";
+import UserController from "../user/UserController";
 
 @injectable()
 export default class UrlController {
@@ -31,25 +32,37 @@ export default class UrlController {
         private getUrlsByOwnerEmail: GetUrlsByOwnerEmailPort
     ) {}
 
+    private static tryToGetUserEmail(req: Request): string | undefined {
+        let email
+        try {
+            email = (extractJwtPayload(
+                extractToken(req) as string
+            ) as { email: string })?.email
+        } finally { 
+            return email
+        }
+    }
     public registerUrl = async (req: Request, res: Response) => {
         try {
             const urlData = req.body as Pick<UrlToCreate, "to">
-            const { email } = extractJwtPayload(
-                extractToken(req) as string
-            ) as { email:string }
 
+            const ownerEmail = UrlController.tryToGetUserEmail(req)
+
+            const urlToCreate: UrlToCreate = {
+                to: UrlController.addProtocolToUrl(urlData.to),
+                ownerEmail
+            }
             
-            urlData.to = UrlController.addProtocolToUrl(urlData.to)
-
             const createdUrl = await this.createUrl.execute(
-                { ...urlData, ownerEmail: email }
+                urlToCreate
             )
             if (isError(createdUrl)) {
                 return res.status(createdUrl.code).json(createdUrl)
             }
 
             return res.status(201).json(createdUrl)
-        } catch {
+        } catch (e){
+            console.log(e)
             return InternalServerError(res)
         }
     }

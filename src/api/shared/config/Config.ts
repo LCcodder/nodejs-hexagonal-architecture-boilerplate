@@ -1,6 +1,8 @@
 import { logger } from "../../infrastructure/web/logger/PinoLogger";
 import { IConfig } from "./IConfig";
 import appCfg from "../../../../app-cfg.json"
+const dotenv = require("dotenv")
+dotenv.config()
 
 export const CONFIG: IConfig = {
     appPort: appCfg.app_port || 8080,

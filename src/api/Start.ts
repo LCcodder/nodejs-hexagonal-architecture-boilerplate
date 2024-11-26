@@ -9,16 +9,25 @@ import { routeUrlEndpoints } from "./infrastructure/web/routers/url/UrlRouter";
 import { connectAndGetRedisInstance } from "./infrastructure/storage/cache/RedisInstance";
 import { connectAndInitKeyspace } from "./infrastructure/storage/database/InitKeyspace";
 const express = require("express")
+import helmet from "helmet";
+import { HelmetOptions } from "helmet";
 
 export default async function start (app: Application): Promise<void> {
     CONFIG.log()
 
+    // setting up middlewares
     app.use(express.json())
     app.use(express.urlencoded({
         extended: true
     }))
     app.use(httpLogger)
 
+    // security measures
+    app.disable('x-powered-by');
+    app.use(helmet())
+    app.use(helmet.xssFilter())
+
+    // initializing dependencies
     const cassandraClient = new CassandraInstance(
         CONFIG.databaseHost,
         CONFIG.datacenter,
@@ -30,10 +39,14 @@ export default async function start (app: Application): Promise<void> {
 
     const coreDependencies = await injectDependencies(cassandraClient, redisClient)
 
+
+
     routeUserEndpoints(app, coreDependencies.userController)
     routeAuthEndpoints(app, coreDependencies.authController)
     routeUrlEndpoints(app, coreDependencies.urlController)
     
+    
+
     app.listen(CONFIG.appPort, "0.0.0.0", () => {
         logger.info(`Listening incoming trafic at 0.0.0.0:${CONFIG.appPort}\n`)
     })
