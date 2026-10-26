@@ -31,7 +31,10 @@ export default async function start (app: Application): Promise<void> {
     const cassandraClient = new CassandraInstance(
         CONFIG.databaseHost,
         CONFIG.datacenter,
-        CONFIG.keyspace
+        CONFIG.keyspace,
+        CONFIG.databaseUsername && CONFIG.databasePassword
+            ? { username: CONFIG.databaseUsername, password: CONFIG.databasePassword }
+            : undefined
     ).client
     await connectAndInitKeyspace(cassandraClient)
     

@@ -1,5 +1,0 @@
-{
-    "jwt_expiration": "48h",
-    "redis_expiration": 172800,
-    "app_port": 8080
-}

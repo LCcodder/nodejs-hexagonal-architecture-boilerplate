@@ -1,9 +1,25 @@
-FROM node:20.11.0-alpine3.18 AS builder
+FROM node:20.11.0-alpine3.18 AS deps
 
 WORKDIR /app
 COPY package.json package-lock.json ./
-RUN npm i
+RUN npm ci --omit=dev
 
-COPY ./ ./
+FROM node:20.11.0-alpine3.18 AS build
 
-CMD ["npm", "start"]
+WORKDIR /app
+COPY package.json package-lock.json ./
+RUN npm ci
+COPY tsconfig.json ./
+COPY src ./src
+RUN npx tsc
+
+FROM node:20.11.0-alpine3.18 AS runtime
+
+ENV NODE_ENV=production
+WORKDIR /app
+COPY package.json ./
+COPY --from=deps /app/node_modules ./node_modules
+COPY --from=build /app/build ./build
+USER node
+
+CMD ["node", "build/main.js"]

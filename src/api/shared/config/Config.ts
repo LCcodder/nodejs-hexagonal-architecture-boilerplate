@@ -1,21 +1,21 @@
 import { logger } from "../../infrastructure/web/logger/PinoLogger";
 import { IConfig } from "./IConfig";
-import appCfg from "../../../../app-cfg.json"
+// import appCfg from "../../../../app-cfg.json"
 const dotenv = require("dotenv")
 dotenv.config()
 
 export const CONFIG: IConfig = {
-    appPort: appCfg.app_port || 8080,
+    appPort: 8080,
     
     jwtSecret: process.env.JWT_SECRET || "secret",
-    jwtExpiration: appCfg.jwt_expiration || "24h",
+    jwtExpiration: process.env.JWT_EXPIRATION || "24h",
 
     databaseHost: process.env.DATABASE_HOST || "localhost",
     datacenter: process.env.DATACENTER || "datacenter1",
     keyspace: process.env.KEYSPACE || "miniurl",
     databasePassword: process.env.DATABASE_PASSWORD,
     databaseUsername: process.env.DATABASE_USERNAME,
-    redisExpiration: appCfg.redis_expiration || 172800,
+    redisExpiration: 172800,
     redisConnectionString: process.env.REDIS_CONNECTION_STRING,
 
     log(): void {
